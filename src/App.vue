@@ -1,30 +1,41 @@
 <template>
-  <HelloWorld msg="HelloWorld component" />
+  <!-- <Modal v-show="showModal" @closeModal="toggleModal" :msg="msgForModal" /> -->
+  <Modal v-show="showModal" @closeModal="toggleModal">
+    <p>Message from App slot to Modal component</p>
+    <template v-slot:links>
+      <a href="#">link 1</a>
+      <a href="#">link 2</a>
+      <a href="#">link 3</a>
+    </template>
+  </Modal>
   <p>{{ title }}</p>
+  <button @click="toggleModal">Open Modal</button>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Modal from "./components/Modal";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Modal,
   },
   data() {
     return {
-      title: 'App title - p',
+      title: "App title - p",
+      msgForModal: "Message from App data to Modal component",
+      showModal: false
+    };
+  },
+  methods: {
+    toggleModal() {
+      this.showModal = !this.showModal;
     }
   }
-}
+};
 </script>
 
 <style lang="sass">
-#app
-  font-family: Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  text-align: center
-  color: #2c3e50
-  margin-top: 60px
+body
+  margin: 0
 </style>
