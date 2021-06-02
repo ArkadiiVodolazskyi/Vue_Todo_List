@@ -1,35 +1,36 @@
 <template>
-  <!-- <Modal v-show="showModal" @closeModal="toggleModal" :msg="msgForModal" /> -->
-  <Modal v-show="showModal" @closeModal="toggleModal">
-    <p>Message from App slot to Modal component</p>
-    <template v-slot:links>
-      <a href="#">link 1</a>
-      <a href="#">link 2</a>
-      <a href="#">link 3</a>
-    </template>
-  </Modal>
-  <p>{{ title }}</p>
-  <button @click="toggleModal">Open Modal</button>
+  <h1>Reaction Timer</h1>
+  <button @click="start" :disabled="isPlaying">Start</button>
+  <Block v-if="isPlaying" :delay="delay" @end="endGame" />
+  <Results v-show="score" :score="score" />
 </template>
 
 <script>
-import Modal from "./components/Modal";
+import Block from './components/Block.vue';
+import Results from './components/Results.vue';
 
 export default {
   name: "App",
   components: {
-    Modal,
+    Block,
+    Results
   },
   data() {
     return {
-      title: "App title - p",
-      msgForModal: "Message from App data to Modal component",
-      showModal: false
+      isPlaying: false,
+      delay: null,
+      score: null
     };
   },
   methods: {
-    toggleModal() {
-      this.showModal = !this.showModal;
+    start() {
+      this.score = null;
+      this.isPlaying = true;
+      this.delay = 2000 + Math.round(Math.random() * 5000);
+    },
+    endGame(reactionTime) {
+      this.score = reactionTime;
+      this.isPlaying = false;
     }
   }
 };
