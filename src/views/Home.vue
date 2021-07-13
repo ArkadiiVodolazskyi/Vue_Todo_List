@@ -1,14 +1,57 @@
 <template>
   <div class="home">
-    <h1>Homepage</h1>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, praesentium dolorum libero reprehenderit fugiat exercitationem necessitatibus! Incidunt, eum. Aperiam facere magnam consectetur omnis molestiae vero. Placeat illum animi deserunt in illo, amet perspiciatis corrupti ex quo aut, ducimus earum sapiente! Odio pariatur facere voluptatibus libero magnam possimus quo voluptatum nobis.</p>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam, praesentium dolorum libero reprehenderit fugiat exercitationem necessitatibus! Incidunt, eum. Aperiam facere magnam consectetur omnis molestiae vero. Placeat illum animi deserunt in illo, amet perspiciatis corrupti ex quo aut, ducimus earum sapiente! Odio pariatur facere voluptatibus libero magnam possimus quo voluptatum nobis.</p>
+    <div v-if="projects.length">
+      <h2>Projects</h2>
+      <div class="projects">
+        <SingleProject
+          v-for="(project, index) in projects"
+          :style="{'animation-delay': `${index * 0.1}s`}"
+          :key="project.id"
+          :project="project"
+          @delete="handleDelete"
+          @complete="handleComplete"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import SingleProject from '../components/SingleProject.vue';
+
 export default {
   name: 'Home',
-  components: {}
+  components: {
+    SingleProject
+  },
+  data() {
+    return {
+      projects: [],
+    };
+  },
+  methods: {
+    redrawProjects() {
+      fetch('http://localhost:3000/projects')
+      .then(res => res.json())
+      .then(data => {
+        const dataToArray = data.slice(0);
+        this.projects = dataToArray.sort((a, b) => {
+          return a.complete > b.complete;
+        });
+      })
+      .catch(err => console.log(err));
+    },
+    handleDelete(id) {
+      this.projects = this.projects.filter(project => {
+        return project.id !== id;
+      });
+    },
+    handleComplete() {
+      this.redrawProjects();
+    }
+  },
+  mounted() {
+    this.redrawProjects();
+  }
 }
 </script>

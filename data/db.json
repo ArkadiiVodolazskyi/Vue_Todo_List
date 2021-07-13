@@ -1,7 +1,25 @@
 {
-	"jobs": [
-		{ "title": "Ninja UX Designer", "id": 1, "details": "lorem" },
-		{ "title": "Ninja Web Developer", "id": 2, "details": "lorem" },
-		{ "title": "Ninja Vue Developer", "id": 3, "details": "lorem" }
-	]
+  "projects": [
+    {
+      "id": 1,
+      "title": "Create new homepage banner",
+      "details": "Lorem ipsum",
+      "complete": true,
+      "dateChanged": "13.7.2021 at 22:48"
+    },
+    {
+      "id": 2,
+      "title": "Create new article",
+      "details": "Lorem ipsum",
+      "complete": false,
+      "dateChanged": "13.7.2021 at 22:48"
+    },
+    {
+      "id": 3,
+      "title": "Create new homepage footer",
+      "details": "Lorem ipsum",
+      "complete": true,
+      "dateChanged": "13.7.2021 at 22:48"
+    }
+  ]
 }

@@ -1,13 +1,26 @@
-# modal-project
+1. json-server --watch data/db.json
+2. npm run serve
 
-
-## Project setup
-npm install - to install dependencies
-### Compiles and hot-reloads for development
-npm run serve
-### Compiles and minifies for production
-npm run build
-### Lints and fixes files
-npm run lint
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# DB Data
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Create new homepage banner",
+      "details": "Lorem ipsum",
+      "complete": false
+    },
+    {
+      "id": 2,
+      "title": "Create new article",
+      "details": "Lorem ipsum",
+      "complete": true
+    },
+    {
+      "id": 3,
+      "title": "Create new homepage footer",
+      "details": "Lorem ipsum",
+      "complete": false
+    }
+  ]
+}
