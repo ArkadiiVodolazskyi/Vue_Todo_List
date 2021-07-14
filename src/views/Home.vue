@@ -1,11 +1,12 @@
 <template>
   <div class="home">
+    <FilterNav :current="current" @showProjectsType="updateFilter" />
     <div v-if="projects.length">
       <h2>Projects</h2>
       <div class="projects">
         <SingleProject
-          v-for="(project, index) in projects"
-          :style="{'animation-delay': `${index * 0.1}s`}"
+          v-for="(project, index) in filterUpdated"
+          :style="{'animation-delay': `${(index * 0.1).toFixed(1)}s`}"
           :key="project.id"
           :project="project"
           @delete="handleDelete"
@@ -17,16 +18,19 @@
 </template>
 
 <script>
+import FilterNav from '../components/FilterNav.vue';
 import SingleProject from '../components/SingleProject.vue';
 
 export default {
   name: 'Home',
   components: {
-    SingleProject
+    SingleProject,
+    FilterNav
   },
   data() {
     return {
       projects: [],
+      current: 'all',
     };
   },
   methods: {
@@ -48,10 +52,27 @@ export default {
     },
     handleComplete() {
       this.redrawProjects();
+    },
+    updateFilter(projectsType) {
+      this.current = projectsType;
     }
   },
   mounted() {
     this.redrawProjects();
+  },
+  computed: {
+    filterUpdated() {
+      if (this.current === 'ongoing') {
+        return this.projects.filter(project => !project.complete);
+      } else if (this.current === 'completed') {
+        return this.projects.filter(project => project.complete);
+      }
+      return this.projects;
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>
